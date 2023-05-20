@@ -1,0 +1,26 @@
+def lccs(s1, s2):
+    l1 = len(s1)
+    l2 = len(s2)
+    index_1 = {x: [] for x in "abcdefghijklmnopqrstuvwxyz"}
+    for i, j in enumerate(s1):
+        index_1[j].append(i)
+    index_2 = {x: [] for x in "abcdefghijklmnopqrstuvwxyz"}
+    for i, j in enumerate(s2):
+        index_2[j].append(i)
+    maximum = ""
+    s1 += '1'
+    s2 += '0'
+    for i in range(l1):
+        start = i
+        for j in index_2[s1[i]]:
+            i = start
+            while s1[i] == s2[j]:
+                i += 1
+                j += 1
+            value = s1[start:i]
+            if len(value) > len(maximum):
+                maximum = value
+            elif len(value) == len(maximum):
+                maximum = min(maximum, value)
+    return(maximum)
+print(lccs('kkaaabca', 'labcllll'))
